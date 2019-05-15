@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 const Configstore = require('configstore')
+const chalk = require('chalk')
 const {login} = require('./login')
 const {addToInbox} = require('./add-to-inbox')
 
+
 async function run() {
 	const conf = new Configstore('dynalist-inbox', {DYNALIST_TOKEN: null})
+	const argv = require('minimist')(process.argv.slice(2));
 
-	// With only two flags, no args parse framework is required.
-	if (process.argv.indexOf('-h') !== -1) {
+	if ( argv.h){
 		console.log(`usage: dynalist-inbox [-h] [--login]
   Options:
       --login
@@ -18,7 +20,7 @@ async function run() {
 		process.exit(-1)
 	}
 
-	if (process.argv.indexOf('--login') !== -1 || !conf.get('DYNALIST_TOKEN')) {
+	if (argv.login || !conf.get('DYNALIST_TOKEN')) {
 		const token = await login(conf)
 		conf.set('DYNALIST_TOKEN', token)
 	} else {
@@ -26,4 +28,4 @@ async function run() {
 	}
 }
 
-run().catch(error => console.error(error))
+run().catch(error => console.error(chalk.red('ERROR: ' , error.message)))
