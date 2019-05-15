@@ -1,0 +1,29 @@
+{
+  "name": "dynalist-inbox",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo --fix"
+  },
+  "bin": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.4.2",
+    "configstore": "^4.0.0",
+    "figures": "^3.0.0",
+    "inquirer": "^6.3.1"
+  },
+  "devDependencies": {
+    "xo": "^0.24.0"
+  },
+  "xo": {
+    "semicolon": false,
+    "prettier": true
+  },
+  "engines": {
+    "node": "10.x"
+  }
+}
