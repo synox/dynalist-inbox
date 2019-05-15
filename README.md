@@ -12,6 +12,9 @@ Simple CLI for https://dynalist.io to add an item to the inbox. See https://help
 
     $ dynalist-inbox -h
 
+## notice
+We are not affiliated, associated, authorized, endorsed by, or in any way officially connected with https://dynalist.io.
+
 ## see also
  
  * https://apidocs.dynalist.io
