@@ -5,21 +5,21 @@ const chalk = require('chalk')
 const {login} = require('./login')
 const {addToInbox} = require('./add-to-inbox')
 
+const argv = require('minimist')(process.argv.slice(2));
+if ( argv.h){
+	console.log(`usage: dynalist-inbox [-h] [--login]
+Options:
+  --login
+	  change or set API key
+  -h 
+	  display this message`)
+	process.exit(-1)
+}
 
-async function run() {
+
+async function run(argv) {
 	const conf = new Configstore('dynalist-inbox', {DYNALIST_TOKEN: null})
-	const argv = require('minimist')(process.argv.slice(2));
-
-	if ( argv.h){
-		console.log(`usage: dynalist-inbox [-h] [--login]
-  Options:
-      --login
-          change or set API key
-      -h 
-          display this message`)
-		process.exit(-1)
-	}
-
+	// force login if the token is not set
 	if (argv.login || !conf.get('DYNALIST_TOKEN')) {
 		const token = await login(conf)
 		conf.set('DYNALIST_TOKEN', token)
@@ -28,4 +28,4 @@ async function run() {
 	}
 }
 
-run().catch(error => console.error(chalk.red('ERROR: ' , error.message)))
+run(argv).catch(error => console.error(chalk.red('ERROR: ' , error.message)))

@@ -16,11 +16,9 @@ const login = async function() {
 
 async function verifyToken(token) {
 	const res = await axios.post('https://dynalist.io/api/v1/file/list', {token})
-	if (res.data._code.toUpperCase() === 'OK') {
-		return true
+	if (res.data._code.toUpperCase() !== 'OK') {
+		throw new Error(`Login failed. code=${res.data._code} msg=${res.data._msg}`)
 	}
-
-	throw new Error(`Login failed. code=${res.data._code} msg=${res.data._msg}`)
 }
 
 module.exports = {login}
