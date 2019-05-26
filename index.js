@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const Configstore = require('configstore')
+const Conf = require('conf');
 const chalk = require('chalk')
 const {login} = require('./login')
 const {addToInbox} = require('./add-to-inbox')
@@ -18,13 +18,21 @@ Options:
 
 
 async function run(argv) {
-	const conf = new Configstore('dynalist-inbox', {DYNALIST_TOKEN: null})
+
+	const schema = {
+		DYNALIST_TOKEN: {
+			type: 'string',
+			default: ""
+		},
+	};
+	
+	const config = new Conf({schema});
 	// force login if the token is not set
-	if (argv.login || !conf.get('DYNALIST_TOKEN')) {
-		const token = await login(conf)
-		conf.set('DYNALIST_TOKEN', token)
+	if (argv.login || !config.get('DYNALIST_TOKEN')) {
+		const token = await login(config)
+		config.set('DYNALIST_TOKEN', token)
 	} else {
-		await addToInbox(conf.get('DYNALIST_TOKEN'))
+		await addToInbox(config.get('DYNALIST_TOKEN'))
 	}
 }
 
