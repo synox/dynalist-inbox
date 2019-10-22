@@ -25,8 +25,10 @@ async function run(argv) {
 			default: ""
 		},
 	};
+
+	cost projectName = 'dynalist-inbox';
 	
-	const config = new Conf({schema});
+	const config = new Conf({projectName,schema});
 	// force login if the token is not set
 	if (argv.login || !config.get('DYNALIST_TOKEN')) {
 		const token = await login(config)
